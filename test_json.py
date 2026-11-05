@@ -57,6 +57,32 @@ class JsonOutputTests(unittest.TestCase):
             self.assertEqual(caught.exception.code, 0)
             self.assertIn('"healthy": false', out.getvalue())
 
+    def test_strict_mode_fails_on_missing_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                status = main(['--strict', directory])
+            self.assertEqual(status, 1)
+            self.assertIn('README: MISSING', out.getvalue())
+
+    def test_strict_mode_succeeds_on_complete_repository(self):
+        with tempfile.TemporaryDirectory() as directory:
+            for filename in ('README.md', '.gitignore', 'LICENSE'):
+                (Path(directory) / filename).touch()
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                status = main([directory, '--strict'])
+            self.assertEqual(status, 0)
+            self.assertIn('License: OK', out.getvalue())
+
+    def test_strict_mode_keeps_json_machine_readable(self):
+        with tempfile.TemporaryDirectory() as directory:
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                status = main(['--json', '--strict', directory])
+            self.assertEqual(status, 1)
+            self.assertFalse(json.loads(out.getvalue())['healthy'])
+
 
 if __name__ == '__main__':
     unittest.main()
