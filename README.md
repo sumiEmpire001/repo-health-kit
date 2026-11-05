@@ -6,7 +6,7 @@ A lightweight Python tool that checks whether a local repository includes basic 
 
 ## Requirements
 
-Python 3.6 or newer. No third-party packages.
+Python 3.6 or newer. No third-party packages are required to run the audit tool.
 
 ## Run
 
@@ -43,11 +43,24 @@ Example JSON output:
 
 The script checks for `README.md`, `.gitignore`, and `LICENSE` in the selected directory and prints `OK` or `MISSING` by default. JSON mode reports the same checks plus an overall `healthy` boolean. Missing files do not cause a nonzero exit status; invalid directories and arguments do.
 
-Run tests with:
+## Testing and coverage
+
+Run the unit tests (no dependencies required):
 
 ```bash
-python -m unittest -v
+python -m unittest discover -v
 ```
+
+To measure coverage locally, install the optional developer dependency and run:
+
+```bash
+python -m pip install 'coverage>=7,<8'
+python -m coverage run --source=audit -m unittest discover -v
+python -m coverage report -m
+python -m coverage xml -o coverage.xml
+```
+
+GitHub Actions runs tests on Python 3.9, 3.11 and 3.13, and separately generates a coverage report on Python 3.11. Download `python-coverage-xml` from a completed workflow run's **Artifacts** section. The coverage percentage measures executed lines in `audit.py`, not overall correctness.
 
 ## Limitations
 
