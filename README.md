@@ -129,7 +129,7 @@ python -m twine check dist/*
 
 ## Release status
 
-See [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) for the verified CI checks, manual release steps, and outstanding release decisions. This repository currently has no LICENSE file; please choose licensing terms before publishing or redistributing it as open source.
+See [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) for the verified CI checks, manual release steps, and outstanding release decisions. This project is open source under the [MIT License](LICENSE). Keep the copyright and license notice when redistributing it.
 
 ## Limitations
 
