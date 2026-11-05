@@ -92,6 +92,49 @@ class JsonOutputTests(unittest.TestCase):
                 self.assertEqual(main(['--json', directory]), 0)
             self.assertEqual(json.loads(out.getvalue()), expected)
 
+    def test_html_report_for_missing_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                self.assertEqual(main(['--html', directory]), 0)
+            self.assertIn('<!doctype html>', out.getvalue())
+            self.assertIn('Needs attention', out.getvalue())
+            self.assertIn('README</th><td>MISSING', out.getvalue())
+
+    def test_html_report_for_healthy_repository_and_strict(self):
+        with tempfile.TemporaryDirectory() as directory:
+            for filename in ('README.md', '.gitignore', 'LICENSE'):
+                (Path(directory) / filename).touch()
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                self.assertEqual(main(['--html', '--strict', directory]), 0)
+            self.assertIn('Overall status: <strong>Healthy</strong>', out.getvalue())
+            self.assertIn('License</th><td>OK', out.getvalue())
+
+    def test_html_strict_fails_for_missing_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                self.assertEqual(main(['--strict', '--html', directory]), 1)
+            self.assertIn('<html lang="en">', out.getvalue())
+
+    def test_html_escapes_directory_name(self):
+        with tempfile.TemporaryDirectory() as directory:
+            special = Path(directory) / 'a&b'
+            special.mkdir()
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                self.assertEqual(main(['--html', str(special)]), 0)
+            self.assertIn('a&amp;b', out.getvalue())
+            self.assertNotIn('a&b</code>', out.getvalue())
+
+    def test_html_and_json_are_mutually_exclusive(self):
+        err = io.StringIO()
+        with contextlib.redirect_stderr(err):
+            with self.assertRaises(SystemExit) as caught:
+                main(['--html', '--json'])
+        self.assertEqual(caught.exception.code, 2)
+
 
 if __name__ == '__main__':
     unittest.main()
