@@ -34,6 +34,35 @@ class AuditTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "Repository directory not found"):
                 audit(missing)
 
+    def test_alternative_readme_and_license_filenames(self):
+        readme_names = ('README.md', 'README.rst', 'README.txt', 'README')
+        license_names = ('LICENSE', 'LICENSE.md', 'LICENSE.txt', 'LICENCE', 'LICENCE.md', 'LICENCE.txt')
+        for readme in readme_names:
+            for license_name in license_names:
+                with self.subTest(readme=readme, license=license_name):
+                    with tempfile.TemporaryDirectory() as directory:
+                        root = Path(directory)
+                        (root / readme).touch()
+                        (root / license_name).touch()
+                        self.assertTrue(audit(root)['README'])
+                        self.assertTrue(audit(root)['License'])
+
+    def test_unrecognized_names_do_not_count(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'README.pdf').touch()
+            (root / 'COPYING').touch()
+            self.assertFalse(audit(root)['README'])
+            self.assertFalse(audit(root)['License'])
+
+    def test_alternative_names_must_be_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'README.rst').mkdir()
+            (root / 'LICENCE.txt').mkdir()
+            self.assertFalse(audit(root)['README'])
+            self.assertFalse(audit(root)['License'])
+
 
 if __name__ == "__main__":
     unittest.main()
