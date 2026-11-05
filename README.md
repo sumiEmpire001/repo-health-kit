@@ -1,5 +1,7 @@
 # Repo Health Kit
 
+[![Python tests](https://github.com/sumiEmpire001/repo-health-kit/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/sumiEmpire001/repo-health-kit/actions/workflows/python-tests.yml)
+
 A lightweight Python tool that checks whether a local repository includes basic project documentation and configuration.
 
 ## Requirements
