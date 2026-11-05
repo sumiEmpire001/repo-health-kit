@@ -7,10 +7,11 @@ def audit(path):
     root = Path(path)
     if not root.is_dir():
         raise ValueError('Repository directory not found')
+    filenames = {entry.name.casefold() for entry in root.iterdir() if entry.is_file()}
     checks = {
-        'README': any((root / name).is_file() for name in ('README.md', 'README.rst', 'README.txt', 'README')),
-        'Git ignore': (root / '.gitignore').is_file(),
-        'License': any((root / name).is_file() for name in ('LICENSE', 'LICENSE.md', 'LICENSE.txt', 'LICENCE', 'LICENCE.md', 'LICENCE.txt')),
+        'README': any(name in filenames for name in ('readme.md', 'readme.rst', 'readme.txt', 'readme')),
+        'Git ignore': '.gitignore' in filenames,
+        'License': any(name in filenames for name in ('license', 'license.md', 'license.txt', 'licence', 'licence.md', 'licence.txt')),
     }
     return checks
 
