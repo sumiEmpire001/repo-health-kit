@@ -18,7 +18,7 @@ def audit(path):
 
 
 def render_html(checks, path):
-    rows = '\\n'.join(
+    rows = '\n'.join(
         '<tr><th scope="row">{}</th><td>{}</td></tr>'.format(
             escape(name), 'OK' if found else 'MISSING'
         )
@@ -26,17 +26,17 @@ def render_html(checks, path):
     )
     status = 'Healthy' if all(checks.values()) else 'Needs attention'
     return (
-        '<!doctype html>\\n<html lang="en">\\n<head>\\n'
-        '<meta charset="utf-8">\\n<meta name="viewport" content="width=device-width, initial-scale=1">\\n'
-        '<title>Repository health report</title>\\n'
+        '<!doctype html>\n<html lang="en">\n<head>\n'
+        '<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+        '<title>Repository health report</title>\n'
         '<style>body{font:16px system-ui,sans-serif;max-width:700px;margin:3rem auto;padding:0 1rem}'
         'table{border-collapse:collapse;width:100%}th,td{padding:.8rem;text-align:left;border-bottom:1px solid #ddd}'
-        'th{width:60%}</style>\\n</head>\\n<body>\\n'
-        '<h1>Repository health report</h1>\\n'
-        '<p>Directory: <code>{}</code></p>\\n'
-        '<p>Overall status: <strong>{}</strong></p>\\n'
+        'th{width:60%}</style>\n</head>\n<body>\n'
+        '<h1>Repository health report</h1>\n'
+        '<p>Directory: <code>{}</code></p>\n'
+        '<p>Overall status: <strong>{}</strong></p>\n'
         '<table><thead><tr><th>Check</th><th>Status</th></tr></thead>'
-        '<tbody>{}</tbody></table>\\n</body>\\n</html>'
+        '<tbody>{}</tbody></table>\n</body>\n</html>'
     ).format(escape(str(path)), status, rows)
 
 
