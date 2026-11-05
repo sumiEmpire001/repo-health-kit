@@ -43,6 +43,20 @@ class JsonOutputTests(unittest.TestCase):
             self.assertEqual(caught.exception.code, 2)
             self.assertIn('Repository directory not found', err.getvalue())
 
+    def test_module_entry_point_exits_successfully(self):
+        import runpy
+        import sys
+        from unittest.mock import patch
+
+        with tempfile.TemporaryDirectory() as directory:
+            out = io.StringIO()
+            with patch.object(sys, 'argv', ['audit.py', '--json', directory]):
+                with contextlib.redirect_stdout(out):
+                    with self.assertRaises(SystemExit) as caught:
+                        runpy.run_module('audit', run_name='__main__')
+            self.assertEqual(caught.exception.code, 0)
+            self.assertIn('"healthy": false', out.getvalue())
+
 
 if __name__ == '__main__':
     unittest.main()
