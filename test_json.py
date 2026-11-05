@@ -33,6 +33,16 @@ class JsonOutputTests(unittest.TestCase):
                 main([directory])
             self.assertIn('README: MISSING', out.getvalue())
 
+    def test_invalid_path_exits_with_argparse_error(self):
+        with tempfile.TemporaryDirectory() as directory:
+            missing = str(Path(directory) / 'missing')
+            err = io.StringIO()
+            with contextlib.redirect_stderr(err):
+                with self.assertRaises(SystemExit) as caught:
+                    main([missing])
+            self.assertEqual(caught.exception.code, 2)
+            self.assertIn('Repository directory not found', err.getvalue())
+
 
 if __name__ == '__main__':
     unittest.main()
