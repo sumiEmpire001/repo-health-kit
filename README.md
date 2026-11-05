@@ -56,11 +56,11 @@ To measure coverage locally, install the optional developer dependency and run:
 ```bash
 python -m pip install 'coverage>=7,<8'
 python -m coverage run --source=audit -m unittest discover -v
-python -m coverage report -m
+python -m coverage report -m --fail-under=85
 python -m coverage xml -o coverage.xml
 ```
 
-GitHub Actions runs tests on Python 3.9, 3.11 and 3.13, and separately generates a coverage report on Python 3.11. Download `python-coverage-xml` from a completed workflow run's **Artifacts** section. The coverage percentage measures executed lines in `audit.py`, not overall correctness.
+GitHub Actions runs tests on Python 3.9, 3.11 and 3.13, and separately generates a coverage report on Python 3.11. Download `python-coverage-xml` from a completed workflow run's **Artifacts** section. CI requires at least **85% statement coverage** for `audit.py`; a lower result fails the coverage job. The coverage percentage measures executed lines in `audit.py`, not overall correctness.
 
 ## Limitations
 
