@@ -84,6 +84,18 @@ The script checks for a supported README (`README.md`, `README.rst`, `README.txt
 
 See [`examples/sample-report.json`](examples/sample-report.json) for the actual JSON schema produced when auditing an empty directory. The unit test checks that this example stays synchronized with the CLI output. The Python tests workflow also uploads the example as the downloadable `repo-health-sample-report` artifact. For your own project, run `repo-health --json /path/to/repository` to generate a report.
 
+## Downloadable HTML example
+
+The Python tests workflow generates a standalone HTML report and uploads it as the `repo-health-sample-html-report` artifact. Open the [Actions page](https://github.com/sumiEmpire001/repo-health-kit/actions/workflows/python-tests.yml), select a successful run, and download the artifact to preview the report in a browser without installing Python. The report is generated from a deliberately empty example repository and displays missing hygiene files; it does not audit your actual repositories.
+
+To generate the same example locally, run:
+
+```bash
+python generate_sample_html.py
+```
+
+This writes `examples/sample-report.html`. To audit your own directory instead, use `repo-health --html /path/to/repository > report.html`.
+
 ## Testing and coverage
 
 Run the unit tests (no dependencies required):
