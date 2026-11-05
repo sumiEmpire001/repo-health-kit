@@ -127,6 +127,10 @@ python -m build
 python -m twine check dist/*
 ```
 
+## Release status
+
+See [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) for the verified CI checks, manual release steps, and outstanding release decisions. This repository currently has no LICENSE file; please choose licensing terms before publishing or redistributing it as open source.
+
 ## Limitations
 
 This is an initial hygiene check, not a security scanner or a full code-quality audit. It checks only the listed filename variants in the selected directory; filename matching is case-insensitive on all supported filesystems. Only regular files count; directories with matching names do not.
