@@ -12,12 +12,20 @@ permissions:
 
 jobs:
   unittest:
-    name: Unit tests (Python ${{ matrix.python-version }})
-    runs-on: ubuntu-latest
+    name: Unit tests (${{ matrix.os }}, Python ${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.9', '3.11', '3.13']
+        include:
+          - os: ubuntu-latest
+            python-version: '3.9'
+          - os: ubuntu-latest
+            python-version: '3.11'
+          - os: ubuntu-latest
+            python-version: '3.13'
+          - os: windows-latest
+            python-version: '3.11'
     steps:
       - name: Check out repository
         uses: actions/checkout@v4

@@ -15,7 +15,7 @@ These checks execute on pull requests and pushes to `main`. Always verify the la
 
 - [x] **Choose and add a LICENSE.** The maintainer selected the MIT License; the repository includes the full license text.
 - [ ] **Confirm release version and tag.** The current package version is `0.1.0`; no PyPI publication is configured.
-- [ ] **Test installation on a real Windows machine** if Windows compatibility is to be advertised. CI currently runs on Ubuntu.
+- [ ] **Verify Windows compatibility.** The Python tests workflow now includes a Windows runner with package installation and CLI smoke tests. Mark this complete only after its GitHub Actions job passes; manual Windows validation is still recommended.
 - [ ] **Decide whether to publish to PyPI.** The existing workflow builds artifacts only; it does not publish.
 
 ## Scope and limitations
