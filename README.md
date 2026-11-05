@@ -91,6 +91,18 @@ python -m coverage xml -o coverage.xml
 
 GitHub Actions runs tests on Python 3.9, 3.11 and 3.13, and separately generates a coverage report on Python 3.11. Download `python-coverage-xml` from a completed workflow run's **Artifacts** section. CI requires **100% statement coverage** for `audit.py`; a lower result fails the coverage job. The coverage percentage measures executed lines in `audit.py`, not overall correctness.
 
+## Package build verification
+
+GitHub Actions also builds a wheel and source distribution on pull requests and pushes to `main`. The package workflow validates distribution metadata with Twine, installs the built wheel, smoke-tests the `repo-health` command outside the repository, and uploads both files as a workflow artifact. This is a build verification process, not an automatic PyPI release.
+
+To build distributions locally:
+
+```bash
+python -m pip install 'build>=1,<2' 'twine>=5,<7'
+python -m build
+python -m twine check dist/*
+```
+
 ## Limitations
 
 This is an initial hygiene check, not a security scanner or a full code-quality audit. It checks only the listed filename variants in the selected directory; filename matching is case-insensitive on all supported filesystems. Only regular files count; directories with matching names do not.
