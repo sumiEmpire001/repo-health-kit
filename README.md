@@ -53,7 +53,7 @@ Example JSON output:
 }
 ```
 
-The script checks for `README.md`, `.gitignore`, and `LICENSE` in the selected directory and prints `OK` or `MISSING` by default. JSON mode reports the same checks plus an overall `healthy` boolean. By default, missing files do not cause a nonzero exit status. With `--strict`, missing files return exit code **1**; a complete repository returns **0**. Invalid directories and arguments return **2** from argparse. Output format is unchanged by strict mode.
+The script checks for a supported README (`README.md`, `README.rst`, `README.txt`, or `README`), `.gitignore`, and a supported license (`LICENSE`, `LICENSE.md`, `LICENSE.txt`, `LICENCE`, `LICENCE.md`, or `LICENCE.txt`) in the selected directory and prints `OK` or `MISSING` by default. JSON mode reports the same checks plus an overall `healthy` boolean. By default, missing files do not cause a nonzero exit status. With `--strict`, missing files return exit code **1**; a complete repository returns **0**. Invalid directories and arguments return **2** from argparse. Output format is unchanged by strict mode.
 
 ## Testing and coverage
 
@@ -76,4 +76,4 @@ GitHub Actions runs tests on Python 3.9, 3.11 and 3.13, and separately generates
 
 ## Limitations
 
-This is an initial hygiene check, not a security scanner or a full code-quality audit. It checks only exact file names in the selected directory.
+This is an initial hygiene check, not a security scanner or a full code-quality audit. It checks only the listed filename variants in the selected directory; filenames are case-sensitive on case-sensitive filesystems.
