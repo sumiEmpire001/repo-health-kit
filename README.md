@@ -51,6 +51,14 @@ Combine strict mode with JSON output:
 python audit.py --strict --json /path/to/repository
 ```
 
+Generate a standalone HTML report to open in a browser:
+
+```bash
+repo-health --html /path/to/repository > report.html
+```
+
+Use `--strict` with HTML to return exit code 1 when checks fail. `--html` and `--json` are mutually exclusive. HTML output escapes the directory name and requires no external stylesheets or scripts.
+
 Generate JSON for automation:
 
 ```bash
