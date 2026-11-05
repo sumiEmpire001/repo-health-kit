@@ -72,6 +72,10 @@ Example JSON output:
 
 The script checks for a supported README (`README.md`, `README.rst`, `README.txt`, or `README`), `.gitignore`, and a supported license (`LICENSE`, `LICENSE.md`, `LICENSE.txt`, `LICENCE`, `LICENCE.md`, or `LICENCE.txt`) in the selected directory and prints `OK` or `MISSING` by default. JSON mode reports the same checks plus an overall `healthy` boolean. By default, missing files do not cause a nonzero exit status. With `--strict`, missing files return exit code **1**; a complete repository returns **0**. Invalid directories and arguments return **2** from argparse. Output format is unchanged by strict mode.
 
+## Example JSON report
+
+See [`examples/sample-report.json`](examples/sample-report.json) for the actual JSON schema produced when auditing an empty directory. The unit test checks that this example stays synchronized with the CLI output. The Python tests workflow also uploads the example as the downloadable `repo-health-sample-report` artifact. For your own project, run `repo-health --json /path/to/repository` to generate a report.
+
 ## Testing and coverage
 
 Run the unit tests (no dependencies required):
