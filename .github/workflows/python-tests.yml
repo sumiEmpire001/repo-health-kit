@@ -43,7 +43,7 @@ jobs:
       - name: Run tests with coverage
         run: python -m coverage run --source=audit -m unittest discover -v
       - name: Print coverage report
-        run: python -m coverage report -m
+        run: python -m coverage report -m --fail-under=85
       - name: Generate XML coverage report
         run: python -m coverage xml -o coverage.xml
       - name: Upload coverage report
