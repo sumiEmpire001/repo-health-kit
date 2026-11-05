@@ -76,4 +76,4 @@ GitHub Actions runs tests on Python 3.9, 3.11 and 3.13, and separately generates
 
 ## Limitations
 
-This is an initial hygiene check, not a security scanner or a full code-quality audit. It checks only the listed filename variants in the selected directory; filenames are case-sensitive on case-sensitive filesystems.
+This is an initial hygiene check, not a security scanner or a full code-quality audit. It checks only the listed filename variants in the selected directory; filename matching is case-insensitive on all supported filesystems. Only regular files count; directories with matching names do not.

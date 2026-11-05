@@ -63,6 +63,27 @@ class AuditTests(unittest.TestCase):
             self.assertFalse(audit(root)['README'])
             self.assertFalse(audit(root)['License'])
 
+    def test_mixed_case_supported_filenames(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name in ('ReadMe.Md', '.GITIGNORE', 'LiCeNsE.TxT'):
+                (root / name).touch()
+            self.assertTrue(all(audit(root).values()))
+
+    def test_mixed_case_directories_do_not_count(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name in ('ReadMe.Md', '.GITIGNORE', 'LiCeNsE.TxT'):
+                (root / name).mkdir()
+            self.assertFalse(any(audit(root).values()))
+
+    def test_unrelated_mixed_case_files_do_not_count(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'README.PDF').touch()
+            (root / 'COPYING').touch()
+            self.assertFalse(any(audit(root).values()))
+
 
 if __name__ == "__main__":
     unittest.main()
