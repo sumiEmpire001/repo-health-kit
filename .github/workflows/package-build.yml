@@ -1,0 +1,41 @@
+name: Package distributions
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and verify wheel and sdist
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install packaging tools
+        run: python -m pip install 'build>=1,<2' 'twine>=5,<7'
+      - name: Build wheel and source distribution
+        run: python -m build
+      - name: Validate package metadata
+        run: python -m twine check dist/*
+      - name: Install built wheel and test entry point
+        run: |
+          python -m pip install --force-reinstall dist/*.whl
+          cd "${RUNNER_TEMP}"
+          repo-health --help
+          repo-health --json .
+      - name: Upload distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: repo-health-kit-distributions
+          path: dist/*
+          if-no-files-found: error
