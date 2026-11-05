@@ -13,7 +13,7 @@ These checks execute on pull requests and pushes to `main`. Always verify the la
 
 ## Release blockers / decisions
 
-- [ ] **Choose and add a LICENSE.** No license file is currently present. The maintainer must select terms before distribution; do not assume an open-source license.
+- [x] **Choose and add a LICENSE.** The maintainer selected the MIT License; the repository includes the full license text.
 - [ ] **Confirm release version and tag.** The current package version is `0.1.0`; no PyPI publication is configured.
 - [ ] **Test installation on a real Windows machine** if Windows compatibility is to be advertised. CI currently runs on Ubuntu.
 - [ ] **Decide whether to publish to PyPI.** The existing workflow builds artifacts only; it does not publish.
@@ -28,4 +28,4 @@ This is a filename-based repository hygiene checker, not a vulnerability scanner
 2. Install the wheel into a clean virtual environment and run `repo-health --help`.
 3. Run `repo-health --json .` and `repo-health --html .`.
 4. Verify `repo-health --strict` returns 1 for an intentionally incomplete directory and 0 for one containing supported README, .gitignore, and LICENSE filenames.
-5. Confirm the package metadata, version, licensing decision, and changelog before creating a tag.
+5. Confirm the package metadata, version, MIT license notice, and changelog before creating a tag.
