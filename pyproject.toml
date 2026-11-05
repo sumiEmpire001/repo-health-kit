@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "repo-health-kit"
+version = "0.1.0"
+description = "Audit basic repository documentation and configuration files"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{name = "Lord_Sumi"}]
+keywords = ["repository", "audit", "cli", "developer-tools"]
+
+[project.scripts]
+repo-health = "audit:main"
+
+[tool.setuptools]
+py-modules = ["audit"]
