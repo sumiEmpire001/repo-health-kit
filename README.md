@@ -6,7 +6,24 @@ A lightweight Python tool that checks whether a local repository includes basic 
 
 ## Requirements
 
-Python 3.6 or newer. No third-party packages are required to run the audit tool.
+Python 3.9 or newer for the installable package. No third-party runtime packages are required; installing from source uses Python packaging tools.
+
+## Install
+
+Clone the repository, then from its root run:
+
+```bash
+python -m pip install .
+```
+
+You can now run the command from any working directory:
+
+```bash
+repo-health --help
+repo-health --strict --json /path/to/repository
+```
+
+For development, use `python -m pip install -e .` instead. This package is installable from source; it has **not** been published to PyPI.
 
 ## Run
 
