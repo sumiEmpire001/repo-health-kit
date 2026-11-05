@@ -83,6 +83,15 @@ class JsonOutputTests(unittest.TestCase):
             self.assertEqual(status, 1)
             self.assertFalse(json.loads(out.getvalue())['healthy'])
 
+    def test_sample_report_matches_empty_directory_output(self):
+        sample_path = Path(__file__).resolve().parent / 'examples' / 'sample-report.json'
+        expected = json.loads(sample_path.read_text(encoding='utf-8'))
+        with tempfile.TemporaryDirectory() as directory:
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                self.assertEqual(main(['--json', directory]), 0)
+            self.assertEqual(json.loads(out.getvalue()), expected)
+
 
 if __name__ == '__main__':
     unittest.main()
