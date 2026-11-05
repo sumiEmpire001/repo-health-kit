@@ -127,6 +127,10 @@ python -m build
 python -m twine check dist/*
 ```
 
+## PyPI publishing
+
+The optional manual GitHub Actions publishing workflow uses tokenless [PyPI Trusted Publishing](PYPI_PUBLISHING.md). PyPI publication requires a one-time trusted-publisher setup and has not been verified yet.
+
 ## Release status
 
 See [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) for the verified CI checks, manual release steps, and outstanding release decisions. This project is open source under the [MIT License](LICENSE). Keep the copyright and license notice when redistributing it.
