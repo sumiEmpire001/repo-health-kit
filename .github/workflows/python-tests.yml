@@ -25,8 +25,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install CLI package
+        run: python -m pip install -e .
       - name: Run unit tests
         run: python -m unittest discover -v
+      - name: Smoke test installed CLI
+        run: |
+          repo-health --help
+          repo-health --json .
 
   coverage:
     name: Test coverage (Python 3.11)
