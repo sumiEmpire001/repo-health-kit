@@ -22,6 +22,18 @@ Check another repository directory:
 python audit.py /path/to/repository
 ```
 
+Fail a CI job when required files are missing:
+
+```bash
+python audit.py --strict /path/to/repository
+```
+
+Combine strict mode with JSON output:
+
+```bash
+python audit.py --strict --json /path/to/repository
+```
+
 Generate JSON for automation:
 
 ```bash
@@ -41,7 +53,7 @@ Example JSON output:
 }
 ```
 
-The script checks for `README.md`, `.gitignore`, and `LICENSE` in the selected directory and prints `OK` or `MISSING` by default. JSON mode reports the same checks plus an overall `healthy` boolean. Missing files do not cause a nonzero exit status; invalid directories and arguments do.
+The script checks for `README.md`, `.gitignore`, and `LICENSE` in the selected directory and prints `OK` or `MISSING` by default. JSON mode reports the same checks plus an overall `healthy` boolean. By default, missing files do not cause a nonzero exit status. With `--strict`, missing files return exit code **1**; a complete repository returns **0**. Invalid directories and arguments return **2** from argparse. Output format is unchanged by strict mode.
 
 ## Testing and coverage
 
