@@ -1,0 +1,8 @@
+{
+  "checks": {
+    "README": false,
+    "Git ignore": false,
+    "License": false
+  },
+  "healthy": false
+}
